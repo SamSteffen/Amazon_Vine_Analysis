@@ -11,41 +11,41 @@ To see whether having a paid Vine membership makes a difference in the percentag
 ## Results
 To examine whether reviews with a Vine subscription revealed a bias as to the number of five-star review ratings, raw data pertaining to musical instruments was extracted from its online source (https://s3.amazonaws.com/amazon-reviews-pds/tsv/amazon_reviews_us_Musical_Instruments_v1_00.tsv.gz) and transformed into a readable dataframe within a Google Colaboratory notebook:
 
-![](images/vine_table_df.png)
+<img width="455" alt="vine_table_df" src="https://user-images.githubusercontent.com/104729703/191330236-3d598a92-d996-4f6b-b5d7-d9c51fce8498.png">
 
 This dataframe was then loaded into PgAdmin via a connection with our Amazon AWS database.
 
-![](images/vine_table_SQL.png)
+<img width="631" alt="vine_table_SQL" src="https://user-images.githubusercontent.com/104729703/191330270-d7c56643-11f5-4cd1-9f2e-bf54837f8cd3.png">
 
 We then exported the resulting vine_table that was uploaded to PgAdmin in part one, as a .csv file, which we read into a Jupyter notebook. From there, the data was further subdivided into four dataframes:
 
 ### Dataframe 1: filtered_df
 
-![](images/df1_filtered_df.png)
+<img width="503" alt="df1_filtered_df" src="https://user-images.githubusercontent.com/104729703/191330361-7ca7e0ca-9d9a-4def-aa9f-9667c5dc9389.png">
 
 The dataframe shown above was created to retrieve all the rows where the total_votes count is equal to or greater than 20, in order to select reviews that are more helpful and to avoid having division by zero errors later on.
 
 ### Dataframe 2: positive_df
 
-![](images/df2_positive_df.png)
+<img width="497" alt="df2_positive_df" src="https://user-images.githubusercontent.com/104729703/191330336-9ef70e93-e83a-4f3d-9426-c921d49bbce1.png">
 
 The dataframe shown above was created by further subdividing the first, to retrieve all the rows in the filtered_df dataset where the number of helpful_votes divided by total_votes is equal to or greater than 50%. This yields us reviews that had some audience engagement, and so provides a stronger data pool.
 
 ### Dataframe 3: vine_df
 
-![](images/df3_vine_df.png)
+<img width="482" alt="df3_vine_df" src="https://user-images.githubusercontent.com/104729703/191330384-cba98f2d-7d13-4730-b23c-5a833e225156.png">
 
 This dataframe was created using our positive_df to retrieve all the rows where a review was written as part of the Vine program (paid), vine == 'Y'. The image shown above only shows the first five rows.
 
 ### Dataframe 4: no_vine_df
 
-![](images/df4_no_vine_df.png)
+<img width="478" alt="df4_no_vine_df" src="https://user-images.githubusercontent.com/104729703/191330410-314054fc-fe08-4251-a798-a7e0fcababd1.png">
 
 This dataframe was created using our positive_df to retrieve all the rows where a review was written from someone with no connection to the Vine program (unpaid), vine == 'N'. The image only shows the first five rows. This gives us a complete dataset that could be used to analyze and compare reviews from individuals with and without a Vine subscription.
 
 Following the creation of the dataframes above, an analysis was performed to retrieve the total number of reviews, the total number of reviews with a five-star rating, and the percentage of five-star reviews for both datasets (i.e., those with a Vine subscription and those without a Vine subscription). The results of this analysis were as follows:
 
-![](images/Summary.png)
+<img width="207" alt="Summary" src="https://user-images.githubusercontent.com/104729703/191330457-502c8a18-388d-4b0f-ae9f-fcc026f61d9a.png">
 
 As the above summary indicates:
 - The total number of reviews in our Vine subscribers dataset was 60.
@@ -65,9 +65,9 @@ Running this analysis shows that 0% of the reviews from the Vine subscribers dat
 
 Using the .describe() function from the pandas library, we can also compare other stats from the two dataframes:
 
-![](images/no_vine_df_describe.png)
+<img width="262" alt="vine_df_describe" src="https://user-images.githubusercontent.com/104729703/191330497-c63c9487-da26-499b-b42e-14a49a30cf79.png">
 
-![](images/vine_df_describe.png)
+<img width="278" alt="no_vine_df_describe" src="https://user-images.githubusercontent.com/104729703/191330521-9597f5a2-b900-4f11-984c-331fcf1753a8.png">
 
 The above images reveal additional quantifiable data about the relationship between those with a Vine subscription and those without, namely:
 - The mean star-rating issued for those with a Vine subscription is 4.38 while the mean star-rating issued for those without a Vine subscription is 4.05.
